@@ -1,0 +1,295 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[margin=2.3cm]{geometry}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=3em
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\title{Registro de trabalho:\\ estrutura geométrica dos números\\
+\large composição $N=2l+C$, trapézios, dobra, gnômon $\Gamma$ e zigurate}
+\date{27 de outubro de 2026}
+\author{}
+
+\begin{document}
+\maketitle
+
+\section{Como retomar em outro chat}
+
+Conversa de 24 a 27/10/2026. Começou num comentário sobre engenharia reversa (separar código de ativos) e passou a uma ideia do usuário: ler primalidade e fatoração \emph{pela forma} (ladrilhamento, dobra, gnômon, trapézios), e não por contas. Tudo abaixo foi conferido com números, salvo o que está marcado como não confirmado (seção~\ref{sec:aberto}).
+
+\textbf{Convenções do usuário.}
+\begin{itemize}[leftmargin=1.4em]
+  \item $P=2a+1$ e $Q=2b+1$ são \emph{coordenadas} de dois ímpares quaisquer, não necessariamente primos. Não usar $p,q$ minúsculos como se fossem sempre primos.
+  \item ``Camada'' = uma maneira de escrever $N$ como soma de inteiros positivos consecutivos (um trapézio). ``Bases'' = primeiro e último termo (lados paralelos do trapézio).
+  \item $2l+C$: $l$ é o que há em cada lado e $C$ é o centro (linha ou ponto central).
+  \item O ponto de vista é geométrico: dobra (\emph{fold}) como compressão, abrir como ladrilhamento, gnômon $\Gamma$ (um L espelhado), zigurate. A aritmética serve só para conferir.
+\end{itemize}
+
+\textbf{Preferências observadas.}
+\begin{itemize}[leftmargin=1.4em]
+  \item Construir figuras ou animações; fórmulas soltas não bastam.
+  \item Não misturar: tabuada e dobra, trapézios e camadas, hexágonos e centrados, coordenadas $(a,b)$.
+  \item Dizer sempre o que foi confirmado e o que não foi.
+  \item Registros em TeX.
+\end{itemize}
+
+\section{Notação}
+
+\begin{itemize}[leftmargin=1.4em]
+  \item $T_n=1+2+\dots+n=\tfrac{n(n+1)}{2}$; $2T_n=n(n+1)$.
+  \item $n=\tfrac{P+Q}{2}$ e $y=\tfrac{Q-P}{2}$, de modo que $PQ=n^2-y^2$. Com $P=2a+1$ e $Q=2b+1$: $n=a+b+1$ e $y=b-a$.
+  \item $S=P+Q$ (soma) e $d=Q-P$ (diferença).
+  \item $\sigma_0(N)$ = número de divisores e $\sigma_1(N)$ = soma dos divisores (o $\sigma$ minúsculo; o $\Sigma$ maiúsculo é o símbolo de soma).
+  \item Vocabulário: \emph{congruente} (padrão) = mesma forma e tamanho, por movimento rígido, estejam onde estiverem. \emph{Adjacente} = compartilha pontos. O usuário leu ``congruente'' como ``igual e ligada por pontos em comum''; as duas propriedades coexistem nos dois trapézios do hexágono (o espelho dá a congruência, a linha comum dá a adjacência).
+\end{itemize}
+
+\section{A composição $N=2l+C$}
+
+\subsection{Restos entre produtos consecutivos}
+Todo $N$ se escreve $N=2(1+2+\dots+n)+c$, com $n(n+1)\le N<(n+1)(n+2)$ e $0\le c\le 2n+1$. Com $n=3$ (parte fixa $12$):
+\[
+15=12+3=4^2-1=3\cdot5,\quad 16=12+4,\quad 17=12+5=4^2+1,\quad 19=12+7,\quad 20=2(1+2+3+4).
+\]
+O quadrado é o caso $c=n+1$: $k^2=2T_{k-1}+k=T_{k-1}+T_k$. Sempre $k^2-1=(k-1)(k+1)$; já $k^2+1$ pode ser primo ($5,17,37,101$) ou não ($10,26,65$).
+
+\subsection{Regra de troca}
+\[
+2a+b=2(a-1)+(b+2),\qquad 9=2(1+2)+3=2(1+2+1)+1,\qquad 7=2(1+2)+1=2\cdot2+3 .
+\]
+Hexágono de $7$ pontos: leitura A (linhas $2,3,2$) $=2\cdot2+3$; leitura B (o desenho $3,1,3$) $=2\cdot3+1$. Os dois pontos laterais da linha do meio passam, um para cima e outro para baixo.
+
+\subsection{Espelho e giro de $180^\circ$}
+Montanha $1,2,\dots,n,\dots,2,1$ soma $n^2=2T_{n-1}+n$ (pares iguais: espelho). Corrida $(n-k),\dots,(n+k)$: $2k+1$ termos, $k$ pares somando $2n$ (giro de $180^\circ$), soma $(2k+1)n=2kn+n$. Exemplos: $25=3+\dots+7$ ($n=5$, $k=2$); $91=10+\dots+16=1+\dots+13$.
+
+\subsection{Polinômios de Euler}
+$n^2+n+c=n(n+1)+c$. Para $c\in\{1,2,3,5,11,17,41\}$ o valor é primo para $0\le n\le c-2$ (conferido) e em $n=c-1$ vale $c^2$ (o caso do quadrado $c=n+1$): $40^2+40+41=1681=41^2$ e $41^2+41+41=1763=41\cdot43$. O discriminante $1-4c$ vale $-3,-7,-11,-19,-43,-67,-163$ (número de classe $1$; resultado conhecido). Fatos de contexto: nenhum polinômio não constante dá primo para \emph{todo} $n$ (Goldbach, 1752); se um de grau $\ge2$ dá infinitos primos está em aberto ($n^2+1$); grau $1$ é Dirichlet.
+
+\section{Tabuada, dobra e gnômon $\Gamma$}
+
+\subsection{O quadrado dobrado}
+Tabuada $P\cdot Q$, $1\le P,Q\le L$. Dobrando na diagonal $P=Q$, cada par $(P,Q),(Q,P)$ se encaixa; a diagonal (quadrados) não tem par. Os primos aparecem só na borda ($P=1$ e $Q=1$); o interior ($P,Q\ge2$) só tem compostos (conferido para $L=16$). Triângulo dobrado: catetos = a borda $P=1$ e a última linha; hipotenusa = a dobra.
+
+\subsection{Gnômon $k$}
+Camada $\max(P,Q)=k$: $2k-1=2(k-1)+1$ células; $k^2=1+3+5+\dots+(2k-1)$. Com a origem embaixo à direita a camada é um $\Gamma$. O $\Gamma$ é simétrico pela diagonal que passa pelo canto: dobrá-lo dá uma linha de $k$ células (o canto fica fixo, é o $C=1$; cada célula de um braço cai sobre a do outro, é o $l=k-1$). O triângulo de lado $k$ desdobra em $2T_{k-1}+k=k^2$.
+
+O gnômon $k$ é a progressão $k,2k,\dots,k^2$ ($k$ termos de passo $k$). \textbf{Regra do ``já pisado'':} $k$ é primo se nenhum gnômon anterior ($k'<k$, com $j\ge2$) passou por $k$. Conferido até $60$ (saem $2,3,5,\dots,59$) e na animação até $12$ ($2,3,5,7,11$).
+
+\subsection{Multiplicidade}
+O valor $N$ ocupa $2l+C$ células do quadrado, com $C=1$ só se $N$ é quadrado: $16\to5$, $15\to4$, $17\to2$. É $\sigma_0(N)$. Primo: $l=1$, $C=0$. Valores: $\sigma(16)=31$, $\sigma(15)=24$, $\sigma(17)=18$ (primo: $p+1$).
+
+\subsection{Diferença de quadrados e gnômon}
+$n^2-y^2=(n-y)(n+y)=PQ$. Um ímpar é primo se e somente se tem uma só representação com $y\ge0$ (a de $P=1$). Gnômon de largura $w$ num quadrado de lado $n$: área $n^2-(n-w)^2=w(2n-w)$; ou seja, largura $w$ $\Leftrightarrow$ fator $w$. O primo só admite o $\Gamma$ de largura $1$.
+
+\subsection{Triângulo inscrito e arco de raio $q^2$}
+Como $(P-1)(Q-1)\ge0$: $P+Q\le PQ+1$, com igualdade se e só se $P=1$ ou $Q=1$. Logo todo par $(P,Q)$ de todo $N<q^2$ está no triângulo $P+Q\le q^2$ (vértices na origem e nos dois pontos da borda), e o par trivial de cada $N$ está na reta $P+Q=N+1$ enquanto os pares do meio ficam abaixo dela. No círculo de raio $q^2$ centrado na origem do plano $(P,Q)$: todos esses pares ficam dentro, e o ponto de borda $(1,Q)$ está dentro se e só se $Q<q^2$ (pois $Q^2+1\le q^4\iff Q<q^2$). No plano $(n,y)$ o arco é $n^2+y^2=q^4/2$ e a região é o leque de $\pi/2$ (dois lados retos, as bordas $P=1$ e $Q=1$, e um curvo).
+
+\subsection{Crivo por construção}
+Com os primos até $p$ usados, tudo que sobra abaixo do quadrado do próximo primo $q$ é primo. Estágios $\{2\},\{2,3\},\{2,3,5\},\{2,3,5,7\}$: certo até $8,24,48,120$ (bordas $3^2,5^2,7^2,11^2$); abaixo de $120$ saem $30$ primos ($2$ a $113$). Em $(n,y)$ o primeiro ponto interior que nenhuma diagonal de $3$ ou $5$ riscou é $q\cdot q$ em $(n,y)=(q,0)$, na dobra (para $q=7$: $49$; depois $77,91,119$). Isso é o crivo organizado em camadas e só com somas; precisa dos primos anteriores.
+
+\subsection{Varredura angular e os U}
+Cada par $(P,Q)$ tem ângulo $\theta=\arctan(Q/P)$. Os pares triviais ficam nas pontas, perto de $\pi/2$ e de $0$ ($17$: $86{,}63^\circ$ e $3{,}37^\circ$; $97$: $89{,}41^\circ$ e $0{,}59^\circ$); os quadrados em $\pi/4$ ($49$: $(7,7)$); o meio só tem compostos ($15$: $59{,}04^\circ$ e $30{,}96^\circ$; $91$: $61{,}7^\circ$ e $28{,}3^\circ$). Um composto com fator pequeno tem o par extra perto da ponta (por exemplo $(3,1001)$ a $89{,}83^\circ$), então o ângulo sozinho não decide.
+
+As células de valor $N$ ficam na hipérbole $n=\sqrt{N+y^2}$ (um U): fundo na dobra $(\sqrt N,0)$, braços nas gêmeas. Perto do fundo $n\approx\sqrt N+\tfrac{y^2}{2\sqrt N}$ (para $N=16$: $y=3$ dá $5{,}125$ contra $5$ exato; $y=7{,}5$ dá $11{,}03$ contra $8{,}5$). O V $n=|y|+1$ é a borda.
+
+\section{Trapézios e camadas}
+
+\subsection{O resultado básico}
+O número de maneiras de escrever $N$ como soma de consecutivos positivos é o número de divisores ímpares de $N$ (conferido para $N<400$). Cada camada de $k$ linhas começa em $a=\bigl(N-\tfrac{k(k-1)}{2}\bigr)/k$, que deve ser inteiro positivo; equivale a $2N=k\cdot m$ com $k$ e $m$ de paridade oposta (a parte par e a ímpar como degraus).
+\begin{itemize}[leftmargin=1.4em]
+  \item Ímpar com $2$ camadas: primo (o próprio $N$ e os dois consecutivos $\tfrac{N-1}{2},\tfrac{N+1}{2}$).
+  \item $3$ camadas: quadrado de primo.
+  \item $4$ camadas: produto de dois primos distintos ou cubo de primo. Os cubos saem por teste de raiz inteira. Entre os ímpares $<400$ com $4$ camadas: $73$ semiprimos e $3$ cubos ($27,125,343$), nada além disso.
+  \item Para $N$ par contam os divisores ímpares da parte ímpar; a classificação acima vale para $N$ ímpar.
+\end{itemize}
+Camadas de $91$: $(91)$; $(45,46)$; $(10,\dots,16)$ com $7$ linhas e média $13$; $(1,\dots,13)$ com $13$ linhas e média $7$.
+
+\subsection{Paridade}
+Número de linhas $k$ nas $4$ camadas de $PQ$ (com $P<Q$): $\{1,2,P,Q\}$ se $Q<2P$ (um par, três ímpares: $15,35,91$) e $\{1,2,P,2P\}$ se $Q>2P$ (dois e dois: $21,33,39$); regra sem exceção para os ímpares $<400$. Cubos de primo $p^3$: $k=1,2,p,2p$ (dois e dois).
+
+Bases (primeiro e último termo, sem $k=1$, ímpares $<400$): par--par $\Rightarrow$ mdc $\ge2$ (as $126$ camadas); ímpar--ímpar: $6$ de $86$ têm mdc $>1$ (por exemplo $(3,15)$ no $117$ e $(5,25)$ no $315$); mistas: $27$ de $342$. O mdc das bases divide $k-1$.
+
+\subsection{Padrões par/ímpar}
+Os quatro números $(a,a+1,b,b+1)$ das linhas dos dois trapézios de duas linhas ($P=2a+1$, $Q=2b+1$) têm sempre dois pares e dois ímpares. Os padrões possíveis dependem da paridade de $a$ e de $b$ ($a$ par $\Leftrightarrow P\equiv1 \pmod 4$):
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+padrão & exemplo & $P,Q \pmod 4$ \\
+\midrule
+p-i-i-p & $5\cdot7$: $(2,3)(3,4)$ & $1$ e $3$ \\
+i-p-p-i & $7\cdot13$: $(3,4)(6,7)$ & $3$ e $1$ \\
+p-i-p-i & $5\cdot13$: $(2,3)(6,7)$ & $1$ e $1$ \\
+i-p-i-p & $3\cdot7$: $(1,2)(3,4)$ & $3$ e $3$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Os dois primeiros ($N\equiv3 \bmod 4$) são palíndromos; os dois últimos ($N\equiv1 \bmod 4$) são espelhos um do outro (lidos de trás para a frente), logo redundantes. Para o usuário, a folga entre os pares muda com $Q-P$ (quando $P,Q$ são primos: $2$ sobrepõe um número, $4$ encosta, $6$ deixa um número no meio, como $3,4,\_,6,7$ no caso $7\cdot13$).
+
+\subsection{Produto de dois trapézios de duas linhas}
+$(2a+1)(2b+1)=(a+(a+1))(b+(b+1))$: retângulo cortado em quatro peças $ab$, $a(b+1)$, $(a+1)b$, $(a+1)(b+1)$. As peças da antidiagonal e as outras duas dão $ab+(a+1)(b+1)=2ab+a+b+1$ e $a(b+1)+(a+1)b=2ab+a+b$: dois consecutivos, o trapézio de duas linhas de $N$. Em $91$: $18+28=46$ e $21+24=45$. Vale para quaisquer dois ímpares. Forma centrada: $(2a+1)(2b+1)=2\cdot a\cdot Q+Q$ (isto é, $l=aQ$, $C=Q$); e com a cruz do meio: $N=4ab+(P+Q-1)$ ($91=4\cdot18+19$). Os índices que se encostam somam o mesmo: $(a+1)+b=a+(b+1)=n$ ($4+6=3+7=10$).
+
+\section{Zigurate (trapézio com lados em escada)}
+
+Zigurate de $P$ degraus, cada um saindo uma célula para cada lado: larguras $Q-P+1,\dots,Q+P-1$ (de $2$ em $2$). Topo $t=Q-P+1$, base $Q+P-1$, linha média $Q$; área $=P\cdot Q$ (altura vezes linha média). Retângulo central mais dois triângulos escalonados espelhados:
+\[
+N=P\,t+2T_{P-1}\qquad(\text{ex.: }91=7\cdot7+2\cdot21;\quad 342\,907=391\cdot487+391\cdot390).
+\]
+Existe para $P\mid N$ com $P\le Q$. Dobrado ao meio vira trapézio de consecutivos (linhas $y+1,\dots,n$); as duas metades dividem a coluna central de $P$ células:
+\[
+N=2l+C,\quad l=y+(y+1)+\dots+(n-1),\quad C=P .
+\]
+$91$ ($P=7$, $y=3$, $n=10$): $l=3+\dots+9=42$, $2\cdot42+7=91$. $342\,907$ ($P=391$, $y=243$, $n=634$): $l=391\cdot438=171\,258$, $2l+391=342\,907$.
+
+Forma de gnômon centrado: $N=2l+P^2$ com $l=P\,y$ (centro $P\times P$, braços $P\times y$): $15=2\cdot3+3^2$, $91=2\cdot21+7^2$, $342\,907=2\cdot95\,013+391^2$, $17=2\cdot8+1^2$. O primo tem só o centro $1\times1$ e braços finos e longos, com as pontas $(1,N),(N,1)$ gêmeas pela dobra.
+
+Primo: trapézio degenerado de uma linha só (laje de largura $N$), sem lados em escada.
+
+\section{Coordenadas $(a,b)$, transformada e identidade do resto}
+
+\subsection{Transformada}
+$(a,b)\mapsto(n,y)=(a+b+1,\;b-a)$, matriz $\begin{pmatrix}1&1\\-1&1\end{pmatrix}$ (rotação de $45^\circ$ com escala $\sqrt2$) mais deslocamento de $1$; inversa $a=\tfrac{n-1-y}{2}$, $b=\tfrac{n-1+y}{2}$. Identidade: $(a+b+1)^2-(b-a)^2=(2a+1)(2b+1)$. Exemplo: $(3,6)\mapsto(10,3)$, $91=10^2-3^2$. Como a transformada é afim, leva ponto médio em ponto médio: o ``$n$ bissecta $P$ e $Q$'' vale para quaisquer dois ímpares e não dá informação própria sobre primalidade.
+
+\subsection{A identidade $(x+a)(x+b)=x(x+a+b)+ab$}
+Com $x$ qualquer, $a=P-x$ e $b=Q-x$: $x+a+b=S-x$. O resto $ab$ é o valor em $x$ do polinômio $f(t)=t^2-S\,t+N=(t-P)(t-Q)$: $f(x)=ab$. Conferido: $f(300)=90\,000-380\,400+342\,907=52\,507=91\cdot577$; e $S^2-4N=1268^2-4N=486^2$, raízes $(1268\pm486)/2=877,391$. O sinal de $ab$ muda em $P$ e em $Q$. $N$ dá \emph{uma} equação sobre as duas coordenadas; falta uma segunda grandeza ($S$ ou $d$), obtida só de $N$.
+
+\section{Centrados, hexágonos, cunhas e $\pi$}
+
+\subsection{Centrados}
+Centrado de $m$ lados: $m\,T_n+1$. Triangular centrado $3T_n+1$ ($4,10,19,31$); quadrado centrado $4T_n+1=n^2+(n+1)^2$ ($5,13,25,41$; $13=4\cdot3+1$: quatro triângulos de $3$ pontos em volta de $1$); hexagonal centrado $6T_n+1$ ($7,19,37,61,91$). A casca $k$ tem $m\,k$ pontos ($13=1+4+8$). Também $T_{2n}=4T_n-n$. O hexágono centrado de lado $k$ é $3k(k-1)+1=2\cdot(3T_{k-1})+1$: $7=2\cdot3+1$, $19=2\cdot9+1$, $91=2\cdot45+1$ (leitura B: seis cunhas $T_{k-1}$ em volta de um centro). Só alguns primos são centrados poligonais ($7,19,37,61,127$ hexagonais; $5,13,41,61,113$ quadrados); todo ímpar é $2l+1$.
+
+\subsection{Cubos e hexágonos}
+$(y+1)^3-y^3=3y^2+3y+1=6T_y+1$. $x^3-y^3=(x-y)^3+3xy(x-y)$ e $x^3+y^3=(x+y)^3-3xy(x+y)$. Cubos como soma de cascas: $1,\;1+7,\;1+7+19,\;1+7+19+37=2^3,\dots$ . (Lembrete de erro corrigido: $(a+b)(a^2+b^2)-ab(a+b)=a^3+b^3$, e $a^3-b^3=(a-b)(a^2+b^2)+ab(a-b)$.) Se $x^3-y^3=c$ é primo, $x-y=1$ e $c=3y^2+3y+1$.
+
+\subsection{Hexágono em dois trapézios e em cunhas}
+Cada trapézio tem $k(3k-1)/2$ pontos (pentagonal), linha compartilhada $2k-1$: $N=k(3k-1)-(2k-1)$. $19=12+12-5$; $91=51+51-11$. Pelas $12$ cunhas de $30^\circ$: $N=1+6n+6\lfloor n/2\rfloor+12g$, $g=\lfloor (n-1)^2/4\rfloor$:
+\begin{center}
+\begin{tabular}{c|ccccccc}
+$n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7\\\hline
+$N$ & 7 & 19 & 37 & 61 & 91 & 127 & 169\\
+$g$ & 0 & 0 & 1 & 2 & 4 & 6 & 9
+\end{tabular}
+\end{center}
+Primos e compostos aparecem misturados nessa contagem (sem separação).
+
+\subsection{Cunha, desvio e $\pi$}
+Com raio $s$ (centro até o canto): cunha do hexágono $\tfrac{\sqrt3}{8}s^2=\tfrac{3\sqrt3}{24}s^2$, cunha do círculo $\tfrac{\pi}{12}s^2=\tfrac{2\pi}{24}s^2$ (denominador comum $24$). Desvio por cunha $\tfrac{2\pi-3\sqrt3}{24}s^2\approx0{,}0453\,s^2$; total das $12$ cunhas $\bigl(\pi-\tfrac{3\sqrt3}{2}\bigr)s^2\approx0{,}5435\,s^2$. O hexágono tem o seu ``$\pi$'': $\pi_6=\tfrac{3\sqrt3}{2}\approx2{,}598$, e $\pi_m=\tfrac m2\sin\tfrac{2\pi}{m}$ dá $2{,}598,\,3{,}000,\,3{,}106,\,3{,}133,\,3{,}139$ para $m=6,12,24,48,96$, tendendo a $\pi$. O círculo inscrito ocupa $\tfrac{\pi}{2\sqrt3}\approx0{,}907$ do hexágono. A contagem de pontos num hexágono é um inteiro exato (a razão pontos$/k^2$ tende a $3$, e o contorno continua hexagonal com mais pontos); o $\pi$ aparece ao contar pontos \emph{num disco} de raio $r$:
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$r$ & pontos & $\pi r^2$ & erro \\
+\midrule
+10 & 317 & 314,16 & $+2{,}84$ \\
+100 & 31\,417 & 31\,415,93 & $+1{,}07$ \\
+1000 & 3\,141\,549 & 3\,141\,592,65 & $-43{,}65$ \\
+10000 & 314\,159\,053 & 314\,159\,265,36 & $-212{,}36$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+O erro oscila de sinal e cresce bem mais devagar que $r^2$ (problema do círculo de Gauss).
+
+\subsection{Normas nas malhas}
+Hexagonal (Eisenstein): norma $a^2+ab+b^2$; primos representados: $3$ e os de resto $1$ módulo $3$ ($7,13,19,\dots$); $17$ não. Quadrada (Gauss): $p=x^2+y^2$ se e só se $p=2$ ou $p\equiv1 \pmod 4$ ($5,13,17,41,\dots$). As unidades são as isometrias da malha ($4$ rotações; $6$ rotações).
+
+\section{Arcos, parábola e a escada dos ímpares}
+Na parábola $y=x^2$ as diferenças consecutivas são os ímpares ($1,4,9,16,25$ diferem por $3,5,7,9$): são os tamanhos dos gnômons $2k-1$. Uma escada de largura $1$ e degraus de altura $1,3,5,7,\dots$ tem os cantos exatamente sobre a parábola (lei dos ímpares de Galileo); dois triângulos escalonados espelhados em volta de uma abertura formam um arco falso (\emph{corbel}). Nem todo arco é parabólico: parabólico (carga uniforme na horizontal, só compressão), catenária invertida (peso próprio; o Gateway Arch é catenária ponderada), semicircular romano, ponteagudo gótico. A relação é de parentesco (semelhante, não igual).
+
+\section{Conferência do arquivo \texttt{notas\_fatoracao.tex}}
+Exemplo $N=877\cdot391=342\,907$. Conferi por código: identidade e figura ($x=300$, $a=91$, $b=577$: $x+a+b=968$, $290\,400+52\,507$), as quatro peças ($240\,000+72\,800+23\,100+7\,007$), $Q-P=486$, $Q+P=1268$, $4N=1268^2-486^2=1\,371\,628$, $634^2-243^2=N$, a tabela das bases (percentuais corretos), a forma encadeada, a da diferença (inclusive $x=800$), a cadeia $6,2,1,14$ e o funil $7,57,1$. Pontos a ajustar:
+\begin{enumerate}[leftmargin=1.6em]
+  \item Os coeficientes $6,2,1,14$ são exatamente os quocientes do algoritmo de Euclides ($577=6\cdot91+31$, $91=2\cdot31+29$, $31=1\cdot29+2$, $29=14\cdot2+1$); ``não quocientes calculados'' só vale como modo de obtê-los (somas repetidas).
+  \item ``Sem vai-um escondido'': entre as peças sim, mas a soma final tem vai-um ($335\,900+7\,007$: $5+7=12$ na casa dos milhares).
+  \item Correlação $-0{,}015$ não reproduzida: com $x=386,\dots,396$ e $|x-391|$ dá $+0{,}185$; sem o ponto $391$ dá $-0{,}076$; com sinal, $+0{,}23$. Onze pontos não sustentam correlação; o argumento ``só zera no fator'' já basta.
+  \item $342\,907=17\cdot23\cdot877$ (pois $391=17\cdot23$): tem $8$ camadas, não $4$.
+\end{enumerate}
+
+\section{Experimentos numéricos}
+
+\subsection{Camadas de $342\,907$}
+Linhas $k$ e primeiro termo $a$: $(1,342907)$, $(2,171453)$, $(17,20163)$, $(23,14898)$, $(34,10069)$, $(46,7432)$, $(391,682)$, $(782,48)$. A de $391$ linhas vai de $682$ a $1072$, média $877$ e meia-largura $195$ (com $391=2\cdot195+1$). A de $877$ linhas centrada em $391$ não existe (começaria em $-47$); o $877$ aparece como $782$ linhas ($48\ldots829$), média $438{,}5=877/2$. Custo de achar todas as camadas: testar $k$ até $\sqrt{2N}\approx828$ (827 passos), o que é divisão de tentativa disfarçada.
+
+\subsection{Funil dos dígitos (escala)}
+Funil das notas: fixa os dígitos iniciais de cada fator de cima para baixo ($p\le q$) e mantém os pares de prefixos cujo intervalo de produtos contém $N$. Sobreviventes por nível (semiprimos aleatórios com fatores de $d$ dígitos):
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+$d$ & $N$ & sobreviventes por nível \\
+\midrule
+3 & $877\cdot391$ & 7, 57, 1 \\
+3 & $149\cdot431$ & 6, 48, 1 \\
+4 & $5717\cdot9011$ & 5, 48, 439, 1 \\
+5 & $37363\cdot40583$ & 9, 85, 832, 7594, 1 \\
+6 & $309629\cdot866513$ & 8, 74, 731, 7242, 65748, 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Em $12$ casos ($d=3$ a $6$, três por tamanho) o meio cresce cerca de $10$ vezes por nível, da ordem de $10^{d}/10$, igual ao trabalho da divisão de tentativa; só o último nível cai para $1$.
+
+\subsection{Código usado}
+\begin{verbatim}
+def camadas(N):
+    out, k = [], 1
+    while k*(k+1)//2 <= N:
+        r = N - k*(k-1)//2
+        if r > 0 and r % k == 0:
+            out.append((k, r//k, r//k + k - 1))   # linhas, de, ate
+        k += 1
+    return out
+
+def funil(N, d):      # d <= 7
+    import numpy as np
+    res = []
+    for n in range(1, d + 1):
+        w = 10**(d - n)
+        P = np.arange(10**(n-1), 10**n, dtype=np.int64)
+        plo, phi = P*w, (P+1)*w - 1
+        qmax = (N // plo) // w
+        X = -(-N // phi)
+        qmin = -(-(X + 1) // w) - 1
+        qmin = np.maximum(np.maximum(qmin, P), 10**(n-1))
+        qmax = np.minimum(qmax, 10**n - 1)
+        res.append(int(np.maximum(qmax - qmin + 1, 0).sum()))
+    return res
+\end{verbatim}
+
+\section{Correção registrada: média e desvio}
+O usuário apontou (27/10) que a ``média'' que apresentei nas camadas vem de $P\pm1$ e $Q\pm1$, que são desvios. O que está conferido: numa camada de $k$ linhas, primeiro e último termo são $m\mp\tfrac{k-1}{2}$, com $m=N/k$. Para $k=P$ ímpar, $m=Q$ exatamente e a meia-largura $\tfrac{P-1}{2}=a$ é o desvio. Para $k=2P$ par, $m=Q/2=b+\tfrac12$ (por exemplo $N=342\,907$, $k=782$, $m=438{,}5$); do mesmo modo a camada de duas linhas de $91$ tem média $45{,}5=91/2$, vinda de $(91\mp1)/2$. Ou seja, as médias fracionárias não são fatores: são o fator dividido por $2$, e o inteiro $b$ aparece como $(Q-1)/2$. A leitura dos fatores pelas camadas precisa trabalhar com esses desvios $\pm1$; a formalização fica em aberto.
+
+\section{Erros já corrigidos no percurso (para não repetir)}
+\begin{itemize}[leftmargin=1.4em]
+  \item $(a+b)(a^2+b^2)-ab(a+b)$ é $a^3+b^3$ (soma), não $a^3-b^3$.
+  \item $51$ não é triangular (é pentagonal); o hexágono de $91$ é $51+51-11$ (a linha central é compartilhada).
+  \item Mais pontos na mesma figura não fecham o hexágono em círculo; o desvio da cunha só encolhe dobrando o número de lados (Arquimedes).
+  \item $27,125,343$ são cubos de primo e aparecem entre os de $4$ camadas; saem por teste de raiz inteira.
+  \item O ``dois pares e dois ímpares'' vale para os quatro números $(a,a+1,b,b+1)$ (sempre), e só às vezes para o número de linhas $k$ das camadas.
+  \item Distinguir tabuada (valores $P\cdot Q$), trapézios (somas de consecutivos) e o bloco $2\times2$ (produto de dois trapézios).
+  \item Prova de que nenhum polinômio dá só primos: Goldbach; infinitos primos por polinômio de grau $\ge2$ continua em aberto.
+\end{itemize}
+
+\section{Em aberto e não confirmado}\label{sec:aberto}
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Ponto central:} obter $S=P+Q$ (ou $d=Q-P$) só a partir de $N$, ou uma grandeza calculada de $N$ e da base que acompanhe o sinal de $ab$ e encolha perto de um fator. Hoje todos os caminhos (camadas, tabuada, funil) custam como a divisão de tentativa.
+  \item Ler ``primo'' direto pela borda (ou pelo arco, ou pela assinatura de camadas) sem percorrer as fatorações: a borda dá certeza só abaixo de $q^2$ e precisa dos primos anteriores.
+  \item O que os padrões par/ímpar de $(a,a+1,b,b+1)$ revelam além das classes módulo $4$.
+  \item Formalizar o papel dos desvios $P\pm1$, $Q\pm1$ na leitura das camadas (seção anterior).
+  \item ``Primos são números centrados'': só se confirma que todo ímpar é $2l+1$ e que alguns primos são centrados poligonais; no sentido geral não confirmado.
+  \item ``$\pi$ truncado'' nos hexágonos/trapézios como limite de pontos: não confirmado (contagens são inteiros; a razão trapézio/hexágono tende a $1/2$). Confirmado só no sentido de $\pi_m$ do polígono.
+  \item ``Quadrado com fator $3$ é produto de triangulares'': falha para $81$ e $144$. Vale: se $3\mid k$, os dois triangulares de $k^2=T_{k-1}+T_k$ são múltiplos de $3$ ($k^2=T_{k-1}+T_k$ com $T_{k-1}=m\,k$ para $k=2m+1$).
+  \item Se existe, em geral, separação de primos e compostos pela contagem nas cunhas ou pelo desvio $12W-N$: não observada.
+  \item A bisseção pelas coordenadas $(a,b)$: reduz-se à transformada afim; sem uma grandeza com sinal calculável só de $N$, não é um método de busca.
+\end{itemize}
+
+\section{Figuras e animações geradas}
+Gerou-se, no chat, com matplotlib (os arquivos podem não existir em outro chat; refazer a partir do texto):
+\begin{itemize}[leftmargin=1.4em]
+  \item hexágonos de $19$ e $91$ em seis triângulos; em dois trapézios com linha compartilhada; $k=6$ e $k=100$.
+  \item borda e interior no plano $(P,Q)$; intervalos $a..b$ de soma $N$ e a cunha reta/curva; crivo por etapas (grade) e em diagonais; arco de raio $q^2$; varredura angular; quadrado, losango e triângulo inscrito; U's de $n^2-y^2=N$.
+  \item quadrado dobrado (tabuada); animações do triângulo que abre no quadrado, gnômon por gnômon, e gnômons em $\Gamma$ (origem embaixo à direita).
+  \item escada $1,3,5,7,\dots$ sobre a parábola e os dois triângulos escalonados espelhados.
+\end{itemize}
+
+\end{document}
