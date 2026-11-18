@@ -1,0 +1,255 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\newtheorem{proposicao}{Proposição}
+\newtheorem{observacao}{Observação}
+\theoremstyle{definition}
+\newtheorem{definicao}{Definição}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zm}{\mathbb{Z}/m\mathbb{Z}}
+
+% Mostrador de um relógio de 12 posições (0 no topo, sentido horário)
+\newcommand{\face}{%
+  \draw (0,0) circle (2);
+  \foreach \i in {0,...,11} {
+    \fill ({90-30*\i}:2) circle (1.5pt);
+    \node at ({90-30*\i}:2.4) {\small\i};
+  }
+}
+
+\title{Rotação $\neq$ Reflexão: isometrias do relógio\\e o palíndromo dos quadrados}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{O relógio como $\Zm$}
+
+Um relógio de $m$ posições é o conjunto $\Zm=\{0,1,\dots,m-1\}$, onde $n$ e $n+m$ ocupam o mesmo ponto. Escrevendo $n=mq+f$ com $0\le f<m$, o número $q$ (quantas voltas) é descartado e só $f$ (a posição) é mostrada.
+
+\begin{definicao}[Distância circular]
+Para $x,y\in\Zm$,
+\[
+d(x,y)=\min\bigl(\,(x-y)\bmod m,\ (y-x)\bmod m\,\bigr).
+\]
+Uma \emph{isometria} de $\Zm$ é uma bijeção $T$ com $d(Tx,Ty)=d(x,y)$ para todos $x,y$.
+\end{definicao}
+
+\begin{definicao}[Rotação e reflexão]
+Para $k,c\in\Zm$:
+\[
+\rho_k(x)=x+k \quad(\text{rotação}),\qquad \sigma_c(x)=c-x \quad(\text{reflexão}).
+\]
+\end{definicao}
+
+\section{Ambas são isometrias}
+
+\begin{proposicao}
+$\rho_k$ e $\sigma_c$ são isometrias de $\Zm$.
+\end{proposicao}
+
+\begin{proof}
+Ambas são bijeções ($\rho_k^{-1}=\rho_{-k}$ e $\sigma_c^{-1}=\sigma_c$). Para a rotação, $\rho_k(x)-\rho_k(y)=x-y$. Para a reflexão, $\sigma_c(x)-\sigma_c(y)=-(x-y)$. Como $d$ depende de $(x-y)\bmod m$ apenas através do mínimo entre esse valor e o seu oposto, trocar $x-y$ por $-(x-y)$ não altera $d$. Logo $d$ é preservada.
+\end{proof}
+
+Ou seja, \emph{do ponto de vista da distância, as duas são indistinguíveis}. Essa é a origem da dificuldade de perceber a diferença.
+
+\section{Um ponto isolado não distingue as duas}
+
+\begin{proposicao}
+Para quaisquer $x,y\in\Zm$ existem uma rotação e uma reflexão que levam $x$ em $y$.
+\end{proposicao}
+
+\begin{proof}
+Tome $k=y-x$, então $\rho_k(x)=y$. Tome $c=x+y$, então $\sigma_c(x)=y$.
+\end{proof}
+
+Exemplo em $\Z/12\Z$: $3\mapsto 9$ é feito por $\rho_6$ e também por $\sigma_0$ (pois $-3\equiv 9$).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  \face
+  \draw[dashed,gray] (0,-2.8) -- (0,2.8);
+  \node[gray] at (0,3.1) {\small eixo de $\sigma_0$};
+  \fill[blue] (0:2) circle (3pt);
+  \fill[blue] (180:2) circle (3pt);
+  \draw[->,thick,blue] (1.6,0) arc[start angle=0,end angle=180,radius=1.6];
+  \node[blue] at (0,1.2) {$\rho_6$};
+  \draw[->,thick,red] (1.5,0) -- (-1.5,0);
+  \node[red] at (0,-0.3) {$\sigma_0$};
+\end{tikzpicture}
+\caption{O ponto $3$ vai para $9$ por rotação ($\rho_6$, em azul) e por reflexão ($\sigma_0$, em vermelho). Um ponto isolado não revela qual das duas foi aplicada.}
+\end{figure}
+
+\section{Um par distingue: orientação}
+
+Considere o par ordenado de posições vizinhas $(x,x+1)$.
+\begin{align*}
+\rho_k(x,x+1)&=(x+k,\ x+k+1), && \text{mesma ordem},\\
+\sigma_c(x,x+1)&=(c-x,\ c-x-1), && \text{ordem invertida}.
+\end{align*}
+Define-se a \emph{orientação} do par por $o(u,v)=v-u$. Então $o$ é preservada por rotações e trocada de sinal por reflexões:
+\[
+o\bigl(\rho_k u,\rho_k v\bigr)=o(u,v),\qquad o\bigl(\sigma_c u,\sigma_c v\bigr)=-o(u,v).
+\]
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.8,>=Stealth]
+  % Rotação
+  \begin{scope}
+    \face
+    \fill[blue] (0:2) circle (3pt);
+    \fill[blue] (-30:2) circle (3pt);
+    \fill[orange] (180:2) circle (3pt);
+    \fill[orange] (150:2) circle (3pt);
+    \draw[->,thick,blue] (1.6,0) arc[start angle=0,end angle=180,radius=1.6];
+    \draw[->,thick,blue] (-30:1.3) arc[start angle=-30,end angle=150,radius=1.3];
+    \node at (0,-3.4) {rotação $\rho_6$: $(3,4)\mapsto(9,10)$};
+  \end{scope}
+  % Reflexão
+  \begin{scope}[xshift=7.5cm]
+    \face
+    \draw[dashed,gray] (0,-2.8) -- (0,2.8);
+    \fill[red] (0:2) circle (3pt);
+    \fill[red] (-30:2) circle (3pt);
+    \fill[orange] (180:2) circle (3pt);
+    \fill[orange] (210:2) circle (3pt);
+    \draw[->,thick,red] (0:1.85) -- (180:1.85);
+    \draw[->,thick,red] (-30:1.85) -- (210:1.85);
+    \node at (0,-3.4) {reflexão $\sigma_0$: $(3,4)\mapsto(9,8)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{O par $(3,4)$ em azul/vermelho e a sua imagem em laranja. Na rotação a imagem $(9,10)$ mantém o sentido horário; na reflexão a imagem $(9,8)$ aparece invertida.}
+\end{figure}
+
+\begin{proposicao}
+Se $m>2$, nenhuma reflexão é uma rotação.
+\end{proposicao}
+
+\begin{proof}
+Suponha $\sigma_c=\rho_k$, isto é, $c-x\equiv x+k \pmod m$ para todo $x$. Então $2x\equiv c-k$ para todo $x$. Com $x=0$ e $x=1$ obtemos $2\equiv 0 \pmod m$, ou seja, $m\mid 2$, o que força $m\in\{1,2\}$. Para $m>2$ isso é impossível.
+\end{proof}
+
+\begin{observacao}
+Para $m\le 2$ não há par vizinho com orientação distinguível, e rotação e reflexão coincidem. A distinção só existe quando há ao menos três posições.
+\end{observacao}
+
+\section{Composição: quem vira rotação}
+
+Temos
+\begin{align*}
+\rho_k\circ\rho_l&=\rho_{k+l}, &
+\sigma_c\circ\sigma_d&=\rho_{c-d},\\
+\rho_k\circ\sigma_c&=\sigma_{c+k}, &
+\sigma_c\circ\rho_k&=\sigma_{c-k}.
+\end{align*}
+Por exemplo, $\sigma_c(\sigma_d(x))=c-(d-x)=x+(c-d)$. Duas reflexões dão uma rotação, e uma reflexão composta com uma rotação continua sendo reflexão. O conjunto $\{\rho_k\}\cup\{\sigma_c\}$, com $2m$ elementos, é o grupo diedral $D_m$, e as rotações formam o subgrupo de índice $2$ (as que preservam a orientação).
+
+\section{O quadrado apaga o sinal}
+
+Seja $f(n)=kn^2 \pmod m$.
+\begin{itemize}
+\item \textbf{Reflexão:} $f(-n)=k(-n)^2=kn^2=f(n)$, logo $f\circ\sigma_0=f$.
+\item \textbf{Rotação por uma volta:} $f(n+m)=k(n^2+2nm+m^2)\equiv kn^2=f(n)$, logo $f\circ\rho_m=f$.
+\end{itemize}
+Portanto $f$ é invariante pela reflexão $n\mapsto -n$ e pelo período $m$. Como a conta eleva ao quadrado, o sinal (a orientação) é descartado, e o que se observa na sequência mistura as duas isometrias sem que se note que uma reflexão foi aplicada.
+
+\subsection*{O palíndromo módulo $12$}
+
+Para $n=0,\dots,6$,
+\[
+n^2 \bmod 12 = 0,\ 1,\ 4,\ 9,\ 4,\ 1,\ 0.
+\]
+De $(m-n)^2=m^2-2mn+n^2\equiv n^2$, a sequência é palíndroma em torno de $m/2$. No caso $m=12$ há ainda período menor $6$, porque $(n+6)^2=n^2+12n+36\equiv n^2 \pmod{12}$. Os valores adjacentes diferem por
+\[
+(n+1)^2-n^2=2n+1,
+\]
+os ímpares $1,3,5$, que depois do centro invertem o sinal ($-5,-3,-1$). A soma sobe e desce simetricamente e os extremos se cancelam.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.8cm,y=0.32cm]
+  \draw[->] (-0.5,0) -- (12.9,0) node[right] {$n$};
+  \draw[->] (0,-0.2) -- (0,10.8) node[above] {$n^2 \bmod 12$};
+  \foreach \xx/\yy in {0/0,1/1,2/4,3/9,4/4,5/1,6/0,7/1,8/4,9/9,10/4,11/1,12/0} {
+    \fill (\xx,\yy) circle (2pt);
+    \node[above] at (\xx,\yy) {\small\yy};
+    \node[below] at (\xx,0) {\small\xx};
+  }
+  \draw[dashed,gray] (3,0) -- (3,10);
+  \draw[dashed,gray] (9,0) -- (9,10);
+  \node[gray] at (3,11.2) {\small espelho};
+  \node[gray] at (9,11.2) {\small espelho};
+\end{tikzpicture}
+\caption{A sequência $n^2 \bmod 12$ é simétrica em torno de $n=3$ e $n=9$ (reflexão) e repete com período $6$ (rotação).}
+\end{figure}
+
+\section{O gnômon}
+
+O \emph{gnômon} pitagórico é a peça em L de $2n+1$ unidades que, acrescentada a um quadrado $n\times n$, produz o quadrado $(n+1)\times(n+1)$. Daí
+\[
+n^2=1+3+5+\cdots+(2n-1),
+\]
+uma identidade obtida por composição de peças, sem multiplicação.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.8]
+  \fill[blue!20] (0,0) rectangle (3,3);
+  \fill[orange!50] (3,0) rectangle (4,4);
+  \fill[orange!50] (0,3) rectangle (3,4);
+  \draw[gray] (0,0) grid (4,4);
+  \draw[thick] (0,0) rectangle (4,4);
+  \node at (1.5,1.5) {$3^2=9$};
+  \node[right,align=left] at (4.4,2) {gnômon: $2n+1=7$\\ $4^2-3^2=7$};
+\end{tikzpicture}
+\caption{O quadrado $3\times3$ (azul) e o gnômon em L (laranja) que o completa em $4\times4$.}
+\end{figure}
+
+\section{Cada forma tem as suas isometrias}
+
+O grupo de isometrias depende da figura considerada, e por isso a distinção entre rotação e reflexão precisa ser refeita para cada forma:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Forma & Isometrias que a preservam & Grupo\\
+\hline
+Segmento $[0,s]$ & identidade e $x\mapsto s-x$ & $\Z/2\Z$\\
+Polígono regular de $m$ lados (relógio) & $m$ rotações e $m$ reflexões & $D_m$ (ordem $2m$)\\
+Reta $\Z$ (sem fechar o círculo) & translações $x\mapsto x+k$ e reflexões $x\mapsto c-x$ & $D_\infty$\\
+Retângulo não quadrado & identidade, duas reflexões e a rotação de $\pi$ & $\Z/2\times\Z/2$\\
+\hline
+\end{tabular}
+\end{center}
+
+No segmento $[0,s]$ com $a+b=s$, a reflexão $a\mapsto s-a=b$ é a única isometria não trivial, e é ela que produz o cancelamento $b\equiv -a \pmod s$. No relógio, a reflexão convive com as rotações, e é por isso que o palíndromo e o período aparecem juntos.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  \draw[thick] (0,0) -- (8,0);
+  \foreach \xx/\lab in {0/0, 3/a, 4/{s/2}, 5/{s-a}, 8/s} {
+    \draw (\xx,-0.12) -- (\xx,0.12);
+    \node[below=3pt] at (\xx,0) {$\lab$};
+  }
+  \draw[dashed,gray] (4,-0.5) -- (4,1.4);
+  \draw[->,thick,red] (3,0.25) to[bend left=55] node[midway,above] {$\sigma_s$} (5,0.25);
+\end{tikzpicture}
+\caption{No segmento $[0,s]$, a reflexão $\sigma_s$ em torno de $s/2$ leva $a$ em $s-a=b$.}
+\end{figure}
+
+\paragraph{Registro.}
+\emph{A rotação preserva a ordem e cria período; a reflexão inverte a ordem e cria simetria; o quadrado apaga o sinal e por isso mistura as duas. Um ponto não distingue, um par sim.}
+
+\end{document}
